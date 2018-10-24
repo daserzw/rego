@@ -62,7 +62,7 @@ def create_app(test_config=None):
         return User.get(user_id)
 
     @app.errorhandler(404)
-    def not_fount(e):
+    def not_found(e):
         return render_template('404.html'), 404
 
     @app.errorhandler(500)
