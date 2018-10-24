@@ -1,4 +1,4 @@
-#![rego](rego_logo.png)
+![# rego](rego_logo.png)
 
 rego is a registry application for OpenID Connect federations and entities.
 
