@@ -1,5 +1,3 @@
-import functools
-
 from flask import render_template, Blueprint
 from rego.forms import EntityForm, OrganizationForm
 

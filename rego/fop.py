@@ -1,5 +1,3 @@
-import functools
-
 from flask import render_template, Blueprint
 
 bp = Blueprint('fop', __name__, url_prefix='/fop')

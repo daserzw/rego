@@ -1,6 +1,21 @@
+from flask_login import UserMixin
 from rego import db
 
-class User(db.Model):
+org_admins = db.Table(
+    'org_admins', 
+    db.Column('user_id',
+              db.Integer,
+              db.ForeignKey('user.id'),
+              primary_key=True
+    ),
+    db.Column('organization_id',
+              db.Integer,
+              db.ForeignKey('organization.id'),
+              primary_key=True
+    )
+)
+
+class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255))
     password_hash = db.Column(db.String)
@@ -16,33 +31,19 @@ class User(db.Model):
 
     organizations = db.relationship(
         'Organization',
-        secondary=organizations,
+        secondary=org_admins,
         lazy='subquery',
         backref=db.backref('users', lazy=True)
     )
     
-class Role(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String)
-
 class Organization(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String)
 
-org_admin = db.Table(
-    'org_admins', 
-    db.Column('user_id',
-              db.Integer,
-              db.ForeignKey('user.id'),
-              primary_key=True
-    )
-    db.Column('organization_id',
-              db.Integer,
-              db.ForeignKey('organization.id'),
-              primary_key=True
-    )
-)
-    
+class Role(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String)
+   
 class Contact(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(254))
