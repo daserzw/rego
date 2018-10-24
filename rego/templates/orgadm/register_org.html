@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2 style = "text-align: center;">Registration of an organization</h2>
+
+<form method="POST" action="/register_org">
+    <div>{{ form.org_name.label }}: {{ form.org_name }}</div>
+    <div>{{ form.org_legalcontact_name.label }}: {{ form.org_legalcontact_name }}</div>
+    <div>{{ form.org_legalcontact_email.label }}: {{ form.org_legalcontact_email }}</div>
+    <div>{{ form.org_techadmin_name.label }}: {{ form.org_techadmin_name }}</div>
+    <div>{{ form.org_techadmin_email.label }}: {{ form.org_techadmin_email }}</div>
+</form>
+
+{% endblock %}
