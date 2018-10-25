@@ -11,6 +11,9 @@ setup(
         'flask_sqlalchemy',
         'flask_login',
         'flask_bootstrap',
-        'flask_wtf'
+        'flask_wtf',
+        'pytest',
+        'coverage'
+        
     ],
 )
