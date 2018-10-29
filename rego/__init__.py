@@ -1,15 +1,26 @@
 import os, logging
 
-from flask import Flask
+from flask import Flask, render_template
 from flask_sqlalchemy import SQLAlchemy
 from flask_bootstrap import Bootstrap
 from flask_login import LoginManager
 
 db = SQLAlchemy()
+
 log_formatter = logging.Formatter(
     '[%(asctime)s] %(levelname)s in %(module)s.%(funcName)s [%(pathname)s:%(lineno)d]: %(message)s'
 )
+
 login_manager = LoginManager()
+
+
+def page_not_found(e):
+    return render_template('404.html'), 404
+
+
+def internal_server_error(e):
+    return render_template('500.html'), 500
+
 
 def create_app(test_config=None):
     
@@ -42,6 +53,7 @@ def create_app(test_config=None):
     with app.app_context():
         db.init_app(app)
         db.create_all()
+        app.db = db
         login_manager.init_app(app)
         login_manager.login_view = "login"
 
@@ -57,17 +69,14 @@ def create_app(test_config=None):
     
     from rego.models import User
 
+    
     @login_manager.user_loader
     def load_user(user_id):
         return User.get(user_id)
 
-    @app.errorhandler(404)
-    def not_found(e):
-        return render_template('404.html'), 404
-
-    @app.errorhandler(500)
-    def internal_error(e):
-        return render_template('500.html'), 500
-
+    
+    app.register_error_handler(404, page_not_found)
+    app.register_error_handler(500, internal_server_error)
     
     return app
+

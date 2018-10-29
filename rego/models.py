@@ -21,7 +21,7 @@ class User(db.Model, UserMixin):
     password_hash = db.Column(db.String)
     email = db.Column(db.String(254))
     role_id = db.Column(
-        db.Integer, db.ForeignKey('contact_type.id'), nullable=False
+        db.Integer, db.ForeignKey('role.id'), nullable=True
     )
                               
     role = db.relationship(
@@ -62,9 +62,11 @@ class ContactType(db.Model):
 
 class Entity(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    '''
     data = db.Column(db.JSON)
     
     @property
     def entity_id(self):
         return self.data['sub']    
-
+    '''
+    
