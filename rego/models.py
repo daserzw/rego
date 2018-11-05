@@ -1,4 +1,5 @@
 from flask_login import UserMixin
+from sqlalchemy_utils import JSONType
 from rego import db
 
 org_admins = db.Table(
@@ -62,11 +63,10 @@ class ContactType(db.Model):
 
 class Entity(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    '''
-    data = db.Column(db.JSON)
+    data = db.Column(JSONType)
     
     @property
     def entity_id(self):
         return self.data['sub']    
-    '''
+    
     
