@@ -1,6 +1,7 @@
 import json
-from flask_restful import Api, Resource
+from flask_restful import Api, Resource, request
 from rego.models import Entity
+from rego import db
 
 
 def _process_data(d):
@@ -19,6 +20,12 @@ class EntitiesAPI(Resource):
         for e in Entity.query.all():
             entities.append(e.entity_id)
         return json.dumps(entities)
+
+    def put(self):
+        new_e = Entity(data=json.loads(request.form['data']))
+        db.session.add(new_e)
+        db.session.commit()
+        return {new_e.id: _process_data(new_e.data)}
 
 
 def init(app):
