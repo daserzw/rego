@@ -7,6 +7,11 @@ from flask_login import LoginManager
 
 db = SQLAlchemy()
 
+
+from rego import models
+
+
+
 log_formatter = logging.Formatter(
     '[%(asctime)s] %(levelname)s in %(module)s.%(funcName)s [%(pathname)s:%(lineno)d]: %(message)s'
 )
