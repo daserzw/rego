@@ -13,6 +13,8 @@ setup(
         'flask_login',
         'flask_bootstrap',
         'flask_wtf',
+        'flask_restful',
+        'sqlalchemy_utils',
         'pytest',
         'coverage'
     ],
