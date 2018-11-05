@@ -62,16 +62,17 @@ def create_app(test_config=None):
         login_manager.init_app(app)
         login_manager.login_view = "login"
 
-    # Register app blueprints         
+    # Register app blueprints
     from rego import main, fop, orgadm, api
 
     app.register_blueprint(main.bp)
     app.register_blueprint(fop.bp)
     app.register_blueprint(orgadm.bp)
-    api.init(app)
+    api.init()
+    app.register_blueprint(api.bp)
 
     # Register and define callback and general functions
-    
+
     from rego.models import User
 
     

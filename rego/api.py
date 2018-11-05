@@ -1,8 +1,11 @@
 import json
 from sqlalchemy.exc import IntegrityError
+from flask import Blueprint
 from flask_restful import Api, Resource, request
 from rego.models import Entity
 from rego import db
+
+bp = Blueprint('api', __name__, url_prefix='/api')
 
 
 class EntityAPI(Resource):
@@ -37,8 +40,7 @@ class EntitiesAPI(Resource):
             return {"message": "The uploaded JSON contains an existing 'sub'"}, 422
 
 
-
-def init(app):
-    myapi = Api(app)
-    myapi.add_resource(EntityAPI, '/api/entities/<eid>')
-    myapi.add_resource(EntitiesAPI, '/api/entities')
+def init():
+    myapi = Api(bp)
+    myapi.add_resource(EntityAPI, '/entities/<eid>')
+    myapi.add_resource(EntitiesAPI, '/entities')
