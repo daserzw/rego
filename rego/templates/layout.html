@@ -1,5 +1,13 @@
 {% extends "bootstrap/base.html" %}
-{% block title %}This is an example page{% endblock %}
+
+{% block title %}
+REGO
+{% endblock %}
+
+{% block head %}
+{{ super() }}
+    <link href="{{ url_for('static', filename='styles.css') }}" rel="stylesheet">
+{% endblock %}
 
 {% block navbar %}
 <div class="navbar navbar-fixed-top">
@@ -8,4 +16,51 @@
 {% endblock %}
 
 {% block content %}
+  <div class="container">
+    <div class="page-header">
+      <div class="row">
+        <div class="col-md-10" style="align-items: center;">
+          <img src="{{ url_for('static', filename='rego_logo.png') }}" width="100"/>
+          <h4>Registry for OIDC federations and entities</h4>
+        </div>
+        <div class="col-md-2" style="align-items: center;">
+        </div>
+      </div>
+    </div>
+    <div class="row text-right">
+         {% if current_user.is_authenticated %}
+            <p class="text-right">{{ current_user.uid }} |
+                <a href="{{url_for('logout')}}">
+                 {{  _("Logout") }}
+                </a>
+            </p>
+         {% endif %}
+    </div>
+    <div class="row">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    {% for category, message in messages %}
+    {% if category == 'error' %}
+    {% set css_class = 'alert alert-danger alert-dismissible' %} 
+    {% else %}
+    {% set css_class = 'alert alert-info alert-dismissible' %}
+    {% endif %}
+      <div class="{{ css_class }}">
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>{{ message|safe }}</strong>
+      </div>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    </div>
+  {% block main %}
+  {% endblock %}
+  </div>
+  <br>
+    <footer class="footer">
+      <div class="container">
+      </div>
+    </footer>
 {% endblock %}
+
+
