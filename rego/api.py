@@ -16,6 +16,12 @@ class EntityAPI(Resource):
             q = Entity.query.filter_by(entity_id=eid).first_or_404()
         return q.data
 
+    def delete(self, eid):
+        e = Entity.query.filter_by(id=eid).first_or_404()
+        db.session.delete(e)
+        db.session.commit()
+        return '', 204
+
 
 class EntitiesAPI(Resource):
     def get(self):
@@ -31,7 +37,12 @@ class EntitiesAPI(Resource):
         try:
             new_e.entity_id = data['sub']
         except KeyError:
-            return {"message": "The uploaded JSON doesn't contain a 'sub'"}, 422
+            return {"message": "The uploaded JSON data doesn't contain a 'sub'"}, 422
+        try:
+            new_e.org_id = int(request.form['org'])
+        except KeyError:
+            new_e.org_id = db.null()
+
         db.session.add(new_e)
         try:
             db.session.commit()
