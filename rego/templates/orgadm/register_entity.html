@@ -1,11 +1,20 @@
-{% extends "layout.html" %}
-{% block content %}
-<h2 style = "text-align: center;">Registration of an entity</h2>
-
-<form method="POST" action="/register_entity">
-    <div>{{ form.entity_id.label }}: {{ form.entity_id }}</div>
-    <div>{{ form.entity_jwks.label }}: {{ form.entity_jwks }}</div>
-    <div>{{ form.entity_statement.label }}: {{ form.entity_statement }}</div>
-</form>
-
+{% extends "/layout.html" %}
+{% block main %}
+    <h2 style = "text-align: center;">Registration of an entity</h2>
+    <br>
+    <form method="POST" action="/register_entity"> 
+        <div class="row">
+            <div class="form-group col-xs-6 col-lg-3">
+                <ul>
+                    <li>{{ form.entity_id.label }}: {{ form.entity_id }}</li>
+                    <br>
+                    <li>{{ form.entity_jwks.label }}: {{ form.entity_jwks }}</li>
+                    <br>
+                    <li>{{ form.entity_statement.label }}: {{ form.entity_statement }}</li>
+                    <br>
+                </ul>
+            </div>       
+        </div>
+        <button type="submit" class="btn btn-primary">Register entity</button>
+    </form>
 {% endblock %}

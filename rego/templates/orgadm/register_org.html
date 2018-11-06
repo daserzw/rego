@@ -1,13 +1,24 @@
-{% extends "layout.html" %}
-{% block content %}
-<h2 style = "text-align: center;">Registration of an organization</h2>
-
-<form method="POST" action="/register_org">
-    <div>{{ form.org_name.label }}: {{ form.org_name }}</div>
-    <div>{{ form.org_legalcontact_name.label }}: {{ form.org_legalcontact_name }}</div>
-    <div>{{ form.org_legalcontact_email.label }}: {{ form.org_legalcontact_email }}</div>
-    <div>{{ form.org_techadmin_name.label }}: {{ form.org_techadmin_name }}</div>
-    <div>{{ form.org_techadmin_email.label }}: {{ form.org_techadmin_email }}</div>
-</form>
-
+{% extends "/layout.html" %}
+{% block main %}
+    <h2 style = "text-align: center;">Registration of an organization</h2>
+    <br>
+    <form method="POST" action="/register_org"> 
+        <div class="row">
+            <div class="form-group col-xs-6 col-lg-3">
+                <ul>
+                    <li>{{ form.org_name.label }}: {{ form.org_name }}</li>
+                    <br>
+                    <li>{{ form.org_legalcontact_name.label }}: {{ form.org_legalcontact_name }}</li>
+                    <br>
+                    <li>{{ form.org_legalcontact_email.label }}: {{ form.org_legalcontact_email }}</li>
+                    <br>
+                    <li>{{ form.org_techadmin_name.label }}: {{ form.org_techadmin_name }}</li>
+                    <br>
+                    <li>{{ form.org_techadmin_email.label }}: {{ form.org_techadmin_email }}</li>
+                </ul>
+            </div>       
+        </div>
+        <br>
+        <button type="submit" class="btn btn-primary">Register organization</button>
+    </form>
 {% endblock %}
