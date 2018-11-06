@@ -65,6 +65,13 @@ class Entity(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     entity_id = db.Column(db.String, unique=True)
     data = db.Column(JSONType)
+    org_id = db.Column(
+        db.Integer, db.ForeignKey('organization.id'), nullable=True
+    )
+    organization = db.relationship(
+        'Organization',
+        backref=db.backref('organizations', lazy=True)
+    )
     created_on = db.Column(db.DateTime, server_default=db.func.now())
     updated_on = db.Column(db.DateTime, server_default=db.func.now(),
                            server_onupdate=db.func.now())
