@@ -1,5 +1,5 @@
 from flask import render_template, Blueprint
-from rego.forms import EntityForm, OrganizationForm
+from rego.forms import RegisterEntityForm, RegisterOrganizationForm
 
 bp = Blueprint('orgadm', __name__, url_prefix='/orgadm')
 
@@ -9,10 +9,14 @@ def index():
 
 @bp.route('/register_entity', methods=['GET', 'POST'])
 def register_entity():
-    form = EntityForm()
+    form = RegisterEntityForm()
+    # if form.validate_on_submit():
+      # <todo>
     return render_template('orgadm/register_entity.html', form=form)
 
 @bp.route('/register_org', methods=['GET', 'POST'])
 def register_org():
-    form = OrganizationForm()
+    form = RegisterOrganizationForm()
+    # if form.validate_on_submit():
+        # <todo>
     return render_template('orgadm/register_org.html', form=form)
