@@ -68,8 +68,7 @@ def create_app(test_config=None):
     app.register_blueprint(main.bp)
     app.register_blueprint(fop.bp)
     app.register_blueprint(orgadm.bp)
-    api.init()
-    app.register_blueprint(api.bp)
+    api.init(app)
 
     # Register and define callback and general functions
 
