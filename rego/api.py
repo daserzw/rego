@@ -1,6 +1,5 @@
 import json
 from sqlalchemy.exc import IntegrityError
-from flask import Blueprint
 from flask_restful import Api, Resource, request
 from rego.models import Entity
 from rego import db
@@ -31,7 +30,7 @@ class EntitiesAPI(Resource):
     def get(self):
         entities = dict()
         for e in Entity.query.all():
-            entities[e.id] = {"entityID": e.entity_id,
+            entities[e.id] = {"entity_id": e.entity_id,
                               "url": "{}api/entities/{}".format(request.url_root, quote_plus(e.entity_id)) }
         return entities
 
