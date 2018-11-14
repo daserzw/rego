@@ -4,6 +4,7 @@ from flask import Blueprint
 from flask_restful import Api, Resource, request
 from rego.models import Entity
 from rego import db
+from urllib.parse import quote_plus, unquote_plus
 
 
 class EntityAPI(Resource):
@@ -11,12 +12,17 @@ class EntityAPI(Resource):
         if eid.isdigit():
             q = Entity.query.filter_by(id=eid).first_or_404()
         else:
-            q = Entity.query.filter_by(entity_id=eid).first_or_404()
+            eid_parsed = unquote_plus(eid)
+            q = Entity.query.filter_by(entity_id=eid_parsed).first_or_404()
         return q.data
 
     def delete(self, eid):
-        e = Entity.query.filter_by(id=eid).first_or_404()
-        db.session.delete(e)
+        if eid.isdigit():
+            q = Entity.query.filter_by(id=eid).first_or_404()
+        else:
+            eid_parsed = unquote_plus(eid)
+            q = Entity.query.filter_by(entity_id=eid_parsed).first_or_404()
+        db.session.delete(q)
         db.session.commit()
         return '', 204
 
@@ -25,7 +31,8 @@ class EntitiesAPI(Resource):
     def get(self):
         entities = dict()
         for e in Entity.query.all():
-            entities[e.id] = e.entity_id
+            entities[e.id] = {"entityID": e.entity_id,
+                              "url": "{}api/entities/{}".format(request.url_root, quote_plus(e.entity_id)) }
         return entities
 
     def put(self):
@@ -51,5 +58,5 @@ class EntitiesAPI(Resource):
 
 def init(app):
     myapi = Api(app)
-    myapi.add_resource(EntityAPI, '/api/entities/<eid>')
+    myapi.add_resource(EntityAPI, '/api/entities/<path:eid>')
     myapi.add_resource(EntitiesAPI, '/api/entities')
