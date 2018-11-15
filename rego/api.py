@@ -31,7 +31,7 @@ class EntitiesAPI(Resource):
         entities = dict()
         for e in Entity.query.all():
             entities[e.id] = {"entity_id": e.entity_id,
-                              "url": "{}api/entities/{}".format(request.url_root, quote_plus(e.entity_id)) }
+                              "url": "https://{}/api/entities/{}".format(request.host, quote_plus(e.entity_id)) }
         return entities
 
     def put(self):
